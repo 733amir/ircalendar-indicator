@@ -6,7 +6,7 @@ require_version('AppIndicator3', '0.1')
 from gi.repository import Gtk
 from gi.repository import AppIndicator3
 from khayyam import JalaliDatetime
-from os.path import abspath
+from os.path import realpath, dirname, join
 
 
 id = 'ircalendar-indicator'
@@ -24,8 +24,7 @@ def menu():
 def main():
     day = JalaliDatetime.now().day
     filename = 'Icons/{}.png'.format(day)
-    print(abspath(filename))
-    indicator = AppIndicator3.Indicator.new(id, abspath(filename), AppIndicator3.IndicatorCategory.SYSTEM_SERVICES)
+    indicator = AppIndicator3.Indicator.new(id, join(dirname(realpath(__file__)), filename), AppIndicator3.IndicatorCategory.SYSTEM_SERVICES)
     indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
     indicator.set_menu(menu())
     Gtk.main()
